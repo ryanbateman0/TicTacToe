@@ -45,7 +45,7 @@ function mapGameBoard(currentBoard, gameTurns) {
   let winner = getWinner(currentGameBoard, {X: 'X', O: 'O'})
 
   if (!winner && numberOfTurns === 9) {
-    return 
+    return "/";
   }
 
   return winner ? winner : currentGameBoard;
@@ -84,12 +84,22 @@ function getActiveBoardNumber(currentBoard, gameTurns){
 
   const {row, column} = gameTurns[0].move.square;
 
-  //NEXT BUG TO FIX
-  if (currentBoard[column][row] === 'X' || currentBoard[column][row] === "O" || currentBoard[column][row] === "/"){
+  if (currentBoard[row][column] === 'X' || currentBoard[row][column] === "O" || currentBoard[row][column] === "/"){
     return null;
   }
 
-  return (column * 3) + row;
+  return (row * 3) + column;
+}
+
+function checkForDraw(currentBoard) {
+  for (const row of currentBoard) {
+    for (const square of row) {
+      if (!(square === 'X' || square === 'O' || square === '/')) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 function App() {
@@ -101,7 +111,7 @@ function App() {
   const currentUltimateGameBoard = mapUltimateGameBoard(gameTurns);
   const activeBoardNumber = getActiveBoardNumber(currentUltimateGameBoard, gameTurns);
   const winner = getWinner(currentUltimateGameBoard, players);
-  const hasDraw = gameTurns.length === 81 && !winner;
+  const hasDraw = checkForDraw(currentUltimateGameBoard) && !winner;
 
   function handleSelectRematch() {
     setGameTurns([]);

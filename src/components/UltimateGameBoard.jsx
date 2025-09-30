@@ -7,15 +7,15 @@ export default function UltimateGameBoard({ onSelectSquare, ultimateGameBoard, a
     }
 
     return (
-        <ol id="ultimate-game-board">
+        <ol id="ultimate-game-board" className="ultimate-game-board-ol">
             {ultimateGameBoard.map((row, rowIndex) =>
                 <li key={rowIndex}>
-                    <ol>
+                    <ol className="ultimate-game-board-ol">
                         {row.map((column, columnIndex) =>
                             <li key={columnIndex}>
                                 {
                                 (ultimateGameBoard[rowIndex][columnIndex] === 'X' || ultimateGameBoard[rowIndex][columnIndex] === "O" || ultimateGameBoard[rowIndex][columnIndex] === "/") ?
-                                    <button className="ultimate-game-board-button" disabled>{ultimateGameBoard[rowIndex][columnIndex]}</button> :
+                                    <button className="ultimate-game-board-button" disabled>{ultimateGameBoard[rowIndex][columnIndex]}</button>:
                                     <GameBoard onSelectSquare={handleSelectedSquare} boardActive={Number.isInteger(activeBoardNumber) ? activeBoardNumber === (rowIndex * 3) + columnIndex : true} boardNumber={(rowIndex * 3) + columnIndex} gameBoard={ultimateGameBoard[rowIndex][columnIndex]} />
                                 }
                             </li>)}
